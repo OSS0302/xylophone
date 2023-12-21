@@ -12,8 +12,8 @@ class XylophoneApp extends StatefulWidget {
 class _XylophoneAppState extends State<XylophoneApp> {
   Soundpool pool = Soundpool.fromOptions(options: SoundpoolOptions.kDefault);
 
-  List<int> _soundIds = [];
-  bool _isLoading = true;
+    List<int> _soundIds = [];
+    bool _isLoading = true;
 
   @override
   void initState() {
@@ -25,36 +25,52 @@ class _XylophoneAppState extends State<XylophoneApp> {
         .load('assets/do1.wav')
         .then((soundData) => pool.load(soundData));
 
+    _soundIds.add(soundId);
+
     soundId = await rootBundle
         .load('assets/re.wav')
         .then((soundData) => pool.load(soundData));
+
+    _soundIds.add(soundId);
 
     soundId = await rootBundle
         .load('assets/mi.wav')
         .then((soundData) => pool.load(soundData));
 
+    _soundIds.add(soundId);
+
     soundId = await rootBundle
         .load('assets/fa.wav')
         .then((soundData) => pool.load(soundData));
+
+    _soundIds.add(soundId);
 
     soundId = await rootBundle
         .load('assets/sol.wav')
         .then((soundData) => pool.load(soundData));
 
+    _soundIds.add(soundId);
+
     soundId = await rootBundle
         .load('assets/la.wav')
         .then((soundData) => pool.load(soundData));
+
+    _soundIds.add(soundId);
 
     soundId = await rootBundle
         .load('assets/si.wav')
         .then((soundData) => pool.load(soundData));
 
+    _soundIds.add(soundId);
+
     soundId = await rootBundle
         .load('assets/do2.wav')
         .then((soundData) => pool.load(soundData));
 
+    _soundIds.add(soundId);
+
     setState(() {
-      bool _isLoading = false;
+      _isLoading = false;
     });
   }
 
@@ -72,35 +88,35 @@ class _XylophoneAppState extends State<XylophoneApp> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 72.0),
-                      child: gunban('도', Colors.red, ),
+                      child: gunban('도', Colors.red, _soundIds[0]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 64.0),
-                      child: gunban('레', Colors.deepOrange, ),
+                      child: gunban('레', Colors.deepOrange, _soundIds[1]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 56.0),
-                      child: gunban('미', Colors.yellow,),
+                      child: gunban('미', Colors.yellow, _soundIds[2]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 48.0),
-                      child: gunban('파', Colors.green),
+                      child: gunban('파', Colors.green, _soundIds[3]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 32.0),
-                      child: gunban('솔', Colors.cyan,),
+                      child: gunban('솔', Colors.cyan, _soundIds[4]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: gunban('리', Colors.deepPurple,),
+                      child: gunban('리', Colors.deepPurple, _soundIds[5]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: gunban('시', Colors.brown,),
+                      child: gunban('시', Colors.brown, _soundIds[6]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: gunban('도', Colors.grey,),
+                      child: gunban('도', Colors.grey, _soundIds[7]),
                     ),
                   ],
                 ),
@@ -108,8 +124,14 @@ class _XylophoneAppState extends State<XylophoneApp> {
 
     );
   }
-  Widget gunban(String text, Color color, ) {
-    return  Container(
+  Widget gunban(String text, Color color, int soundId) {
+    return GestureDetector(
+      onTap: () {
+        if (soundId != null) {
+          pool.play(soundId);
+        }
+      },
+      child: Container(
         width: 50,
         height: double.infinity,
         color: color,
@@ -119,7 +141,7 @@ class _XylophoneAppState extends State<XylophoneApp> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-
+      ),
     );
   }
 }
